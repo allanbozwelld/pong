@@ -1,6 +1,4 @@
-from event.events import Quit
-from event.events import Tick
-from event.events import Initialization
+from event.events import Quit, Tick, Initialization
 
 
 class Model(object):
