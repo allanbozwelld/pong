@@ -1,9 +1,7 @@
-from pygame import QUIT
+from pygame import QUIT, KEYDOWN
 from pygame.event import get
 
-from event.events import Quit
-from event.events import Tick
-from event.events import Input
+from event.events import Quit, Tick, Input
 
 
 class Controller(object):
@@ -18,5 +16,5 @@ class Controller(object):
             for event in get():
                 if event.type == QUIT:
                     self.event_manager.post(event=Quit())
-                else:
+                elif event.type == KEYDOWN:
                     self.event_manager.post(event=Input(unicode=event.unicode))
