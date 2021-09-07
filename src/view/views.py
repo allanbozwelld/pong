@@ -6,6 +6,7 @@ from event.events import Quit, Tick, EventManager, Initialization
 from model.models import Model
 
 
+# TODO: Add state functionality to View object.
 class View(object):
     def __init__(self, model: Model, manager: EventManager):
         self.model: Model = model
