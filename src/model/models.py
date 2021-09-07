@@ -1,6 +1,7 @@
 from event.events import Quit, Tick, EventManager, Initialization
 
 
+# TODO: Add state functionality to Model object.
 class Model(object):
     def __init__(self, manager: EventManager):
         self.running: bool = False
