@@ -2,8 +2,8 @@ from weakref import WeakKeyDictionary
 
 
 class Event(object):
-    def __init__(self, event):
-        self.event = event
+    def __init__(self, event: object):
+        self.event: object = event
 
     def __repr__(self):
         return "%s" % self.event
@@ -20,8 +20,9 @@ class Tick(Event):
 
 
 class Input(Event):
-    def __init__(self, unicode):
-        self.unicode = unicode
+    def __init__(self, unicode: str):
+        self.unicode: str = unicode
+
         super(Input, self).__init__(event="Input")
 
     def __repr__(self):
@@ -35,18 +36,19 @@ class Initialization(Event):
 
 class EventManager(object):
     def __init__(self):
-        self.listeners = WeakKeyDictionary()
+        self.debug: bool = True
+        self.listeners: WeakKeyDictionary = WeakKeyDictionary()
 
-    def post(self, event):
-        if not isinstance(event, Tick):
+    def post(self, event: object):
+        if not isinstance(event, Tick) and self.debug:
             print(repr(event))
 
         for listener in self.listeners.keys():
             listener.notify(event)
 
-    def register(self, event):
-        self.listeners[event] = 1
+    def register(self, event: object):
+        self.listeners[event]: int = 1
 
-    def unregister(self, event):
+    def unregister(self, event: object):
         if event in self.listeners.keys():
             del self.listeners[event]
