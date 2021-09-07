@@ -9,6 +9,18 @@ class Event(object):
         return "%s" % self.event
 
 
+class State(object):
+    def __init__(self, state: object):
+        self.name: str = "State"
+        self.state: object = state
+
+    def __repr__(self):
+        if self.state:
+            return "%s pushed %s" % (self.name, self.state)
+        else:
+            return "%s popped" % self.name
+
+
 class Quit(Event):
     def __init__(self):
         super(Quit, self).__init__(event="Quit")
