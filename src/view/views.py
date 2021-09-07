@@ -2,30 +2,30 @@ from pygame import init, quit
 from pygame.display import flip, set_caption, set_mode
 from pygame.time import Clock
 
-from event.events import Quit, Tick, Initialization
+from event.events import Quit, Tick, EventManager, Initialization
+from model.models import Model
 
 
 class View(object):
-    def __init__(self, model, event_manager):
-        self.model = model
-        self.event_manager = event_manager
+    def __init__(self, model: Model, manager: EventManager):
+        self.model: Model = model
+        self.manager: EventManager = manager
 
-        self.clock = None
-        self.screen = None
-        self.initialized = False
+        self.clock: None = None
+        self.screen: None = None
+        self.initialized: bool = False
 
-        event_manager.register(event=self)
+        manager.register(event=self)
 
-    def notify(self, event):
+    def notify(self, event: object):
         if isinstance(event, Initialization):
             self.initialization()
         elif isinstance(event, Quit):
-            self.initialized = False
+            self.initialized: bool = False
 
             quit()
         elif isinstance(event, Tick):
             self.render()
-
             self.clock.tick(30)
 
     def render(self):
@@ -40,6 +40,6 @@ class View(object):
         init()
         set_caption("Pong!")
 
-        self.clock = Clock()
-        self.screen = set_mode(size=(800, 600))
-        self.initialized = True
+        self.clock: Clock = Clock()
+        self.screen: set_mode = set_mode(size=(800, 600))
+        self.initialized: bool = True
