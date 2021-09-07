@@ -5,6 +5,7 @@ from event.events import Quit, Tick, Input, EventManager
 from model.models import Model
 
 
+# TODO: Add state functionality to Controller object.
 class Controller(object):
     def __init__(self, model: Model, manager: EventManager):
         self.model: Model = model
