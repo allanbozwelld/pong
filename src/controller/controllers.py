@@ -1,20 +1,21 @@
 from pygame import QUIT, KEYDOWN
 from pygame.event import get
 
-from event.events import Quit, Tick, Input
+from event.events import Quit, Tick, Input, EventManager
+from model.models import Model
 
 
 class Controller(object):
-    def __init__(self, model, event_manager):
-        self.model = model
-        self.event_manager = event_manager
+    def __init__(self, model: Model, manager: EventManager):
+        self.model: Model = model
+        self.manager: EventManager = manager
 
-        event_manager.register(event=self)
+        manager.register(event=self)
 
-    def notify(self, event):
+    def notify(self, event: object):
         if isinstance(event, Tick):
             for event in get():
                 if event.type == QUIT:
-                    self.event_manager.post(event=Quit())
+                    self.manager.post(event=Quit())
                 elif event.type == KEYDOWN:
-                    self.event_manager.post(event=Input(unicode=event.unicode))
+                    self.manager.post(event=Input(unicode=event.unicode))
