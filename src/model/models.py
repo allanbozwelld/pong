@@ -1,22 +1,20 @@
-from event.events import Quit, Tick, Initialization
+from event.events import Quit, Tick, EventManager, Initialization
 
 
 class Model(object):
-    def __init__(self, event_manager):
-        self.running = False
-        self.event_manager = event_manager
+    def __init__(self, manager: EventManager):
+        self.running: bool = False
+        self.manager: EventManager = manager
 
-        event_manager.register(event=self)
+        manager.register(event=self)
 
     def run(self):
-        self.running = True
-        self.event_manager.post(event=Initialization())
+        self.running: bool = True
+        self.manager.post(event=Initialization())
 
         while self.running:
-            tick = Tick()
+            self.manager.post(event=Tick())
 
-            self.event_manager.post(event=tick)
-
-    def notify(self, event):
+    def notify(self, event: object):
         if isinstance(event, Quit):
-            self.running = False
+            self.running: bool = False
