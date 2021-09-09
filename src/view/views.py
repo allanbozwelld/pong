@@ -3,10 +3,9 @@ from pygame.display import flip, set_caption, set_mode
 from pygame.time import Clock
 
 from event.events import Quit, Tick, EventManager, Initialization
-from model.models import Model
+from model.models import Model, STATE_MENU, STATE_PLAY
 
 
-# TODO: Add state functionality to View object.
 class View(object):
     def __init__(self, model: Model, manager: EventManager):
         self.model: Model = model
@@ -26,13 +25,25 @@ class View(object):
 
             quit()
         elif isinstance(event, Tick):
-            self.render()
+            if not self.initialized:
+                return
+
+            state = self.model.state.peek()
+
+            if state == STATE_MENU:
+                self.render_menu()
+
+            if state == STATE_PLAY:
+                self.render_play()
+
             self.clock.tick(30)
 
-    def render(self):
-        if not self.initialized:
-            return
+    def render_menu(self):
+        self.screen.fill((0, 0, 0))
 
+        flip()
+
+    def render_play(self):
         self.screen.fill((0, 0, 0))
 
         flip()
